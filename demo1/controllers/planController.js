@@ -70,7 +70,8 @@ exports.getPlan = async (req, res, next) => {
 		const plan = await query;
 
 		if (!plan) {
-			return next('No plan found with the id.');
+			// return next('No plan found with the id.');
+			res.status(404).send('No plan found with this id.');
 		}
 
 		res.status(200).json({
@@ -78,8 +79,9 @@ exports.getPlan = async (req, res, next) => {
 			data: { plan },
 		});
 	} catch (error) {
-		console.log(error);
-		return next(error.message);
+		if (error.name === 'CastError') res.status(500).send('Invalid id.');
+		else res.status(500).send('Something goes wrong.');
+		// return next(error.message);
 	}
 };
 
