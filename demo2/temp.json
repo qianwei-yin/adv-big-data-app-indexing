@@ -1,0 +1,58 @@
+{
+	"planCostShares": {
+		"deductible": 100,
+		"_org": "example.com",
+		"copay": 30,
+		"objectType": "memberCostShare"
+	},
+	"linkedPlanServices": [
+		{
+			"linkedService": {
+				"_org": "example.com",
+				"objectType": "service",
+				"name": "Yearly physical"
+			},
+			"planServiceCostShares": {
+				"deductible": 30,
+				"_org": "example2.com",
+				"copay": 34,
+				"objectType": "memberCostShare"
+			},
+			"_org": "example@test.com",
+			"objectType": "planService"
+		},
+		{
+			"linkedService": {
+				"_org": "example.com",
+				"objectType": "service",
+				"name": "Yearly physical"
+			},
+			"planServiceCostShares": {
+				"deductible": 50,
+				"_org": "example3.com",
+				"copay": 56,
+				"objectType": "memberCostShare"
+			},
+			"_org": "example.com",
+			"objectType": "planService"
+		},
+		{
+			"linkedService": {
+				"_org": "example.com",
+				"obrectType": "service",
+				"name": "well baby"
+			},
+			"planServiceCostShares": {
+				"deductible": 70,
+				"_org": "example4.com",
+				"copay": 78,
+				"objectType": "memberCostShare"
+			},
+			"_org": "example.com",
+			"objectType": "planService"
+		}
+	],
+	"_org": "example4.com",
+	"objectType": "plan",
+	"planStatus": "inNetwork"
+}
