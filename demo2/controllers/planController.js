@@ -68,12 +68,37 @@ exports.createPlan = async (req, res, next) => {
 
 		res.status(201).json(newPlan_display);
 	} catch (error) {
-		console.log(error);
-		return next(error.message);
+		if (error.name === 'ValidationError') res.status(400).send(error.message);
+		else res.status(500).send('Something went wrong, please try again later.');
 	}
 };
 
 exports.getPlan = async (req, res, next) => {
+	const reqETag = req.headers['if-none-match'];
+	const planId = req.params.id;
+	try {
+		const oldPlan = await Plan.findById(planId).populate('linkedPlanServices').populate('planCostShares');
+		if (!oldPlan) {
+			res.status(404).send('Cannot find plan with this id.');
+			return;
+		}
+
+		const oldETag = etag(JSON.stringify(oldPlan), { weak: true });
+		if (reqETag === oldETag) {
+			res.status(304).send("The resource isn't modified.");
+			return;
+		}
+	} catch (error) {
+		console.log(error);
+		if (error.name === 'CastError') {
+			res.status(400).send('The id is invalid.');
+			return;
+		} else {
+			res.status(500).send('Something went wrong, please try again later.');
+			return;
+		}
+	}
+
 	try {
 		let query = Plan.findById(req.params.id);
 		query = query.populate('linkedPlanServices').populate('planCostShares');
